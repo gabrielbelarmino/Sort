@@ -1,54 +1,36 @@
 import sys
 
 def selection(List):
-    for item in range(0,len(List)):
-        i_min = item
-        for j in range(item+1,len(List)):
-            if List[j] < List[i_min]:
-                i_min = j
-        if List[item] != List[i_min]:
-            temp = List[item]
-            List[item] = List[i_min]
-            List[i_min] = temp
-
-def selection1(List):
-    for index,item in enumerate(List):
-        i_min = index
-        for j in range(index+1,len(List)):
-            if List[j] < List[i_min]:
-                i_min = j
-        if item != List[i_min]:
-            auxiliar = item
-            item = List[i_min]
-            List[i_min] = auxiliar
+    for indice in range(0,len(List)):
+        indic_min = indice
+        for j in range(indice+1,len(List)):
+            if List[j] < List[indic_min]:
+                indic_min = j
+        if List[indice] != List[indic_min]:
+            temp = List[indice]
+            List[indice] = List[indic_min]
+            List[indic_min] = temp
 
 def insertion(List):
-    for item in range(1,len(List)):
-        pivo = List[item]
-        j = item - 1
-        while j >= 0 and List[j] > pivo:
-            List[j+1] = List[j]
-            j = j-1
-        List[j+1] = pivo
-
-def insertion1(List):
-    for (index,item) in enumerate(List[1:]):
-        pivo = item
-        j = index
+    for indice in range(1,len(List)):
+        pivo = List[indice]
+        j = indice - 1
         while j >= 0 and List[j] > pivo:
             List[j+1] = List[j]
             j = j-1
         List[j+1] = pivo
 
 def main():
-    L = sys.argv[1].split(',')
+    L = sys.argv[2].split(',')
     List = map(lambda x: int (x),L)
-#    print(List)
-#    L = [2,-1,0,5,-10,10]
-#    insertion(List)
-#    insertion1(List)
-    selection1(List)
-    print(List)
-
+    if sys.argv[1] == "insertion":
+        insertion(List)
+        print(List)
+    elif sys.argv[1] == "selection":
+        selection(List)
+        print(List)
+    else:
+        print("Segundo argumento invalido")    
+    
 if __name__ == '__main__':
     main()          

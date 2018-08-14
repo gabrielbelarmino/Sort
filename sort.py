@@ -29,6 +29,68 @@ def insertion(List):
 #       encontra o local do pivo apos o laco    
         List[j+1] = pivo
 
+
+def particiona(List, l, r):
+#   pivo ultimo elemento    
+    pivo =  List[r]
+    i = l - 1
+#   Dividir vetor comparando pivo
+    for j in range(l,r):
+        if List[j] <= pivo:
+            i += 1
+            auxiliar = List[i]
+            List[i] = List[j]
+            List[j] = auxiliar
+#    Associar ultimo Elemento         
+    i += 1
+    auxiliar = List[i]
+    List[i] = List[r]
+    List[r] = auxiliar
+   # print(i)
+    return i
+
+def quick(List, l, r):
+    if l < r :
+#         Agrupa itens maiores e menores do que um pivo arbitrario da funcao        
+        q = particiona(List, l, r)
+#         Ordena recursivamente a primeira metade da tabela 
+        quick(List, l, q-1)
+#         Ordena recursivamente a segunda metade da tabela 
+        quick(List, q+1, r)
+
+def merge(List):
+    if len(List)>1:
+#       Divisao da Lista
+        mid = len(List)//2
+        midEsquerda = List[:mid]
+        midDireita = List[mid:]
+#       Recursao para tornar listas unitarias
+        merge(midEsquerda)
+        merge(midDireita)
+#       Ordenacao
+        i=0
+        j=0
+        k=0
+        while i < len(midEsquerda) and j < len(midDireita):
+            if midEsquerda[i] < midDireita[j]:
+                List[k]=midEsquerda[i]
+                i=i+1
+            else:
+                List[k]=midDireita[j]
+                j=j+1
+            k=k+1       
+
+    #Caso sobre algum elemento (Lista Impar)
+        while i < len(midEsquerda):
+            List[k]=midEsquerda[i]
+            i=i+1
+            k=k+1
+
+        while j < len(midDireita):
+            List[k]=midDireita[j]
+            j=j+1
+            k=k+1    
+
 def main():
     L = sys.argv[2].split(',')
     List = map(lambda x: int (x),L)
@@ -38,6 +100,12 @@ def main():
     elif sys.argv[1] == "selection":
         selection(List)
         print(List)
+    elif sys.argv[1] == "merge":
+        merge(List)
+        print(List)
+    elif sys.argv[1] == "quick":
+        quick(List,0,len(List)-1)
+        print(List)    
     else:
         print("Selecao de algoritimo invalido!!")    
     

@@ -91,6 +91,23 @@ def merge(List):
             j=j+1
             k=k+1    
 
+
+def counting(List, valor_max):
+    """in-place counting sort"""
+    n = len(List)
+    m = valor_max + 1
+    tabela_index = [0] * m               # init with zeros
+    for a in List:
+        tabela_index[a] += 1             # count occurences
+    i = 0
+  #  List_Dest = [] * n
+    print("Tabela de Indexaao: ",tabela_index)
+    for a in range(len(tabela_index)):
+        while 0 < tabela_index[a]:            # emit
+            List[i] = a
+            i += 1
+            tabela_index[a] -= 1
+
 def main():
     L = sys.argv[2].split(',')
     List = map(lambda x: int (x),L)
@@ -105,7 +122,13 @@ def main():
         print(List)
     elif sys.argv[1] == "quick":
         quick(List,0,len(List)-1)
-        print(List)    
+        print(List)
+    elif sys.argv[1] == "counting":
+        List_Res = counting(List,max(List))
+        print(List)
+    elif sys.argv[1] == "heap":
+     #   heap(List,0,len(List)-1)
+        print(List)           
     else:
         print("Selecao de algoritimo invalido!!")    
     

@@ -62,32 +62,32 @@ def merge(List):
     if len(List)>1:
 #       Divisao da Lista
         mid = len(List)//2
-        midEsquerda = List[:mid]
-        midDireita = List[mid:]
+        mid_esquerda = List[:mid]
+        mid_direita = List[mid:]
 #       Recursao para tornar listas unitarias
-        merge(midEsquerda)
-        merge(midDireita)
+        merge(mid_esquerda)
+        merge(mid_direita)
 #       Ordenacao
         i=0
         j=0
         k=0
-        while i < len(midEsquerda) and j < len(midDireita):
-            if midEsquerda[i] < midDireita[j]:
-                List[k]=midEsquerda[i]
+        while i < len(mid_esquerda) and j < len(mid_direita):
+            if mid_esquerda[i] < mid_direita[j]:
+                List[k]=mid_esquerda[i]
                 i=i+1
             else:
-                List[k]=midDireita[j]
+                List[k]=mid_direita[j]
                 j=j+1
             k=k+1       
 
     #Caso sobre algum elemento (Lista Impar)
-        while i < len(midEsquerda):
-            List[k]=midEsquerda[i]
+        while i < len(mid_esquerda):
+            List[k]=mid_esquerda[i]
             i=i+1
             k=k+1
 
-        while j < len(midDireita):
-            List[k]=midDireita[j]
+        while j < len(mid_direita):
+            List[k]=mid_direita[j]
             j=j+1
             k=k+1    
 
@@ -108,6 +108,39 @@ def counting(List, valor_max):
             i += 1
             tabela_index[a] -= 1
 
+
+# def swap(i, j):                    
+#     sqc[i], sqc[j] = sqc[j], sqc[i] 
+
+def max_heapify(List,end,i):   
+    l=2 * i + 1  
+    r=2 * (i + 1)   
+    max=i   
+    if l < end and List[i] < List[l]:   
+        max = l   
+    if r < end and List[max] < List[r]:   
+        max = r   
+    if max != i:   
+        List[i], List[max] = List[max], List[i] 
+        max_heapify(List,end, max)   
+
+def biuld_max_heapify(List,size): 
+    start = size // 2 - 1 # use // instead of /
+    for i in range(start, -1, -1):   
+        max_heapify(List,size, i)  
+
+def heap(List):  
+    size = len(List)   
+    #  end = len(List)   
+    # start = end // 2 - 1 # use // instead of /
+    # for i in range(start, -1, -1):   
+    #     maxheapify(List,end, i) 
+    biuld_max_heapify(List,size)
+    for i in range(size-1, 0, -1):   
+        List[i], List[0] = List[0], List[i]  
+        max_heapify(List,i, 0)  
+
+
 def main():
     L = sys.argv[2].split(',')
     List = map(lambda x: int (x),L)
@@ -127,7 +160,7 @@ def main():
         List_Res = counting(List,max(List))
         print(List)
     elif sys.argv[1] == "heap":
-     #   heap(List,0,len(List)-1)
+        heap(List)
         print(List)           
     else:
         print("Selecao de algoritimo invalido!!")    
